@@ -16,7 +16,7 @@ loginForm.addEventListener('submit', function(event) {
     } else {
         localStorage.setItem('userName', name);
         alert("Вітаємо, " + name + "! Переходимо до Вашого кабінету.");
-        window.location.href = "profile.html"; 
+        window.location.href = "./profile.html"; 
     }
 });
 

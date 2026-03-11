@@ -1,18 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Платформа для навчання</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
     <div class="main-wrapper">
         <h1>Платформа для навчання</h1>
-        <h2>Вхід в систему</h2>
-        <form>
-            </form>
+        <h2 style="text-align: center;">Вхід в систему</h2>
+        <form id="loginForm">
+            <input type="text" id="loginField" placeholder="Логін" required>
+            
+            <div class="password-container">
+                <input type="password" id="passwordField" placeholder="Пароль" required>
+                <button type="button" id="togglePassword">👁️</button>
+            </div>
+            
+            <button type="submit">Увійти</button>
+            <a href="#" class="signup-link">Ще не маєте акаунту? Зареєструватися</a>
+        </form>
     </div>
 </body>
 </html>
