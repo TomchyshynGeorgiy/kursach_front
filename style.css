@@ -1,24 +1,19 @@
-/* Загальні налаштування */
+/* Базові налаштування */
 body {
     margin: 0;
     background-color: #f4f4f9;
     font-family: Arial, sans-serif;
-    overflow-x: hidden; /* Прибирає горизонтальну прокрутку на всяк випадок */
+    color: #1c1e21;
 }
 
 .main-wrapper {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центрує вертикально */
-    align-items: center;     /* Центрує горизонтально */
-    padding: 20px;           /* Безпечний відступ для мобілок */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
     box-sizing: border-box;
-}
-
-h1, h2 {
-    margin: 10px 0; /* Зменшуємо стандартні відступи заголовків */
-    text-align: center;
 }
 
 /* Форма та Картки */
@@ -27,16 +22,20 @@ form, .profile-card {
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 90%;
+    width: 100%;
     max-width: 350px;
+    box-sizing: border-box;
 }
 
-/* Контейнер для пароля (щоб око було всередині) */
+/* Пароль з оком */
 .password-container {
     position: relative;
+    display: flex;
     align-items: center;
+    width: 100%;
 }
 
 input {
@@ -45,6 +44,7 @@ input {
     border-radius: 6px;
     width: 100%;
     box-sizing: border-box;
+    font-size: 16px;
 }
 
 input:focus {
@@ -61,9 +61,11 @@ input:focus {
     cursor: pointer;
     font-size: 18px;
     width: auto;
+    padding: 0;
 }
 
-button {
+/* Кнопки */
+button[type="submit"], .profile-card button {
     background-color: #007bff;
     color: white;
     padding: 12px;
@@ -71,11 +73,16 @@ button {
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.1s;
+    width: 100%;
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+button:active {
+    transform: scale(0.98);
 }
 
 .signup-link {
@@ -83,4 +90,20 @@ button:hover {
     color: #007bff;
     text-decoration: none;
     font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Прогрес-бар */
+.progress-container {
+    background: #eee;
+    border-radius: 10px;
+    height: 12px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: #28a745;
+    height: 100%;
+    transition: width 0.5s ease;
 }
