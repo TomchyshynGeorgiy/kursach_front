@@ -1,13 +1,24 @@
 /* Загальні налаштування */
 body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     margin: 0;
     background-color: #f4f4f9;
     font-family: Arial, sans-serif;
+    overflow-x: hidden; /* Прибирає горизонтальну прокрутку на всяк випадок */
+}
+
+.main-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрує вертикально */
+    align-items: center;     /* Центрує горизонтально */
+    padding: 20px;           /* Безпечний відступ для мобілок */
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    margin: 10px 0; /* Зменшуємо стандартні відступи заголовків */
+    text-align: center;
 }
 
 /* Форма та Картки */
@@ -16,7 +27,6 @@ form, .profile-card {
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    display: flex;
     flex-direction: column;
     gap: 15px;
     width: 90%;
@@ -26,7 +36,6 @@ form, .profile-card {
 /* Контейнер для пароля (щоб око було всередині) */
 .password-container {
     position: relative;
-    display: flex;
     align-items: center;
 }
 
