@@ -107,3 +107,23 @@ button:active {
     height: 100%;
     transition: width 0.5s ease;
 }
+/* Зменшуємо відступи у списку курсів */
+#course-list {
+    gap: 10px;     /* було 15px або 20px */
+    margin-top: 10px;
+}
+
+/* Робимо самі картки курсів тоншими */
+.course-card {
+    padding: 10px 15px; /* було 15-20px з усіх боків */
+    margin-bottom: 0;   /* прибираємо зайві відступи знизу */
+}
+
+.course-card h3 {
+    margin: 0 0 5px 0;  /* менше місця під заголовком */
+    font-size: 15px;    /* трохи менший шрифт */
+}
+
+.course-card p {
+    margin: 2px 0 0 0;  /* мінімальний відступ для тексту з % */
+}
