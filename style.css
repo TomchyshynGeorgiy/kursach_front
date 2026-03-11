@@ -1,94 +1,49 @@
+/* Загальні налаштування */
 body {
-    background-color: #e8e9ea; /* Світло-сірий колір */
-    font-family: Arial, sans-serif; /* Сучасний шрифт без засічок */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Центруємо все по горизонталі */
-    padding-top: 50px;
-}
-body {
-    min-height: 100vh; /* 100% висоти видимого екрана */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Центрує вміст вертикально */
-    align-items: center;     /* Центрує вміст горизонтально */
+    justify-content: center;
+    align-items: center;
     margin: 0;
-    background-color: #f4f4f9; /* Твій колір фону */
-}
-/* Додаємо плавність для всіх інпутів та кнопок */
-input, button, a {
-    transition: all 0.3s ease;
+    background-color: #f4f4f9;
+    font-family: Arial, sans-serif;
 }
 
-/* Робимо картку форми ще виразнішою */
-/* Робимо форму по центру та додаємо зазори */
-form {
+/* Форма та Картки */
+form, .profile-card {
     background-color: white;
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     gap: 15px;
-    align-items: center; /* Це центрирує всі елементи всередині форми по горизонталі */
-    width: 300px;
-    align-items: stretch; /* Розтягує всі елементи на всю ширину форми */
-    width: 320px;
-}
-form h2 {
-    text-align: center;
-}
-#togglePassword {
-    position: absolute;
-    right: 10px;
-    width: auto; /* Важливо! */
-    background: none;
-    border: none;
-    padding: 0;
-}
-/* Виправляємо ширину кнопки, щоб вона була на всю форму */
-form > button[type="submit"] {
-    background-color: #007bff;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%; /* Це розтягне кнопку по центру */
-    font-size: 16px;
-    margin-top: 10px;
-}
-/* Стиль для посилання реєстрації */
-.signup-link {
-    margin-top: 15px;
-    font-size: 14px;
-    color: #007bff;
-    text-decoration: none;
-    text-align: center;
-    font-weight: 600;
+    width: 90%;
+    max-width: 350px;
 }
 
-.signup-link:hover {
-    color: #0056b3;
-    text-shadow: 0 0 1px rgba(0,91,179,0.2);
-}
+/* Контейнер для пароля (щоб око було всередині) */
 .password-container {
+    position: relative;
     display: flex;
     align-items: center;
-    position: relative;
-    width: 100%; /* Однаково з полем логіна */
 }
 
-/* Прибираємо подвійну обводку, якщо вона десь виникає */
-.password-container input {
+input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
     width: 100%;
-}
-#passwordField {
-    width: 100%;
-    padding-right: 40px; /* Місце для ока справа */
+    box-sizing: border-box;
 }
 
-/* Кнопка-око тепер акуратна */
+input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
 #togglePassword {
     position: absolute;
     right: 10px;
@@ -96,87 +51,27 @@ form > button[type="submit"] {
     border: none;
     cursor: pointer;
     font-size: 18px;
-    padding: 0;
-    width: auto; /* Скасовуємо розтягування */
-}
-/* Оформлюємо заголовок */
-h1 {
-    color: #1c1e21;
-    margin-bottom: 20px;
+    width: auto;
 }
 
-/* Робимо поля вводу красивими */
-input {
-    padding: 10px;
-    border: 1px solid #ffffff;
-    border-radius: 5px;
-    width: 100%; /* Тепер поле завжди займає всю доступну ширину */
-    box-sizing: border-box; /* Важливо: щоб padding не роздував ширину */
-}
-
-/* Стиль для кнопки */
 button {
-    background-color: #007bff; /* Синій колір */
+    background-color: #007bff;
     color: white;
-    padding: 10px 20px;
+    padding: 12px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer; /* Курсор стає "рукою" при наведенні */
-    width: 270px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
 }
 
-/* Ефект при наведенні на кнопку */
 button:hover {
     background-color: #0056b3;
 }
-/* Підсвітка полів при натисканні */
-input:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
-}
 
-/* Стиль для посилання реєстрації */
 .signup-link {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #606770;
-    text-decoration: none;
     text-align: center;
-}
-
-.signup-link:hover {
-    text-decoration: underline;
     color: #007bff;
-}
-* Контейнер для списку курсів */
-#course-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    width: 100%;
-    max-width: 900px;
-    margin-top: 30px;
-}
-
-/* Сама картка курсу */
-.course-card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    border-left: 5px solid #007bff; /* Акцентна смужка */
-    transition: transform 0.2s;
-    width: 90%;          /* Займатиме 90% ширини екрана на мобілці */
-    max-width: 400px;    /* Але не більше 400px на комп'ютері */
-    text-align: center;  /* Щоб текст всередині теж був по центру */
-}
-
-.course-card:hover {
-    transform: translateY(-5px); /* Ефект підстрибування при наведенні */
-}
-
-.course-card h3 {
-    margin: 0 0 10px 0;
-    color: #1c1e21;
+    text-decoration: none;
+    font-size: 14px;
 }
