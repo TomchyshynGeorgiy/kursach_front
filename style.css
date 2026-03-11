@@ -167,6 +167,9 @@ input:focus {
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     border-left: 5px solid #007bff; /* Акцентна смужка */
     transition: transform 0.2s;
+    width: 90%;          /* Займатиме 90% ширини екрана на мобілці */
+    max-width: 400px;    /* Але не більше 400px на комп'ютері */
+    text-align: center;  /* Щоб текст всередині теж був по центру */
 }
 
 .course-card:hover {
