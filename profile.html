@@ -3,25 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Платформа для навчання</title>
+    <title>Кабінет студента</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="main-wrapper">
-        <h1>Платформа для навчання</h1>
-        <h2>Вхід в систему</h2>
-        <form id="loginForm">
-            <input type="text" id="loginField" placeholder="Логін" required>
+        <div class="profile-card">
+            <h1>Вітаємо, Студенте!</h1>
             
-            <div class="password-container">
-                <input type="password" id="passwordField" placeholder="Пароль" required>
-                <button type="button" id="togglePassword">👁️</button>
+            <p>Ваш загальний прогрес навчання:</p>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 45%;"></div>
             </div>
-            
-            <button type="submit">Увійти</button>
-            <a href="#" class="signup-link">Ще не маєте акаунту? Зареєструватися</a>
-        </form>
+            <p style="font-size: 14px; margin-bottom: 20px;">Завершено: 45%</p>
+
+            <div id="course-list">
+                <div class="course-card">
+                    <h3>Основи HTML/CSS</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 80%;"></div>
+                    </div>
+                    <p>Прогрес: 80%</p>
+                </div>
+
+                <div class="course-card">
+                    <h3>JavaScript для початківців</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 30%;"></div>
+                    </div>
+                    <p>Прогрес: 30%</p>
+                </div>
+                
+                <div class="course-card">
+                    <h3>Робота з Git та GitHub</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 100%; background: #28a745;"></div>
+                    </div>
+                    <p>Виконано! ✅</p>
+                </div>
+            </div>
+
+            <button onclick="window.location.href='index.html'" style="margin-top: 20px;">Вийти</button>
+        </div>
     </div>
+
+    <script>
+        // Беремо ім'я користувача з пам'яті браузера
+        const savedName = localStorage.getItem('userName');
+        if (savedName) {
+            // Оновлюємо заголовок персональним привітанням
+            document.querySelector('h1').textContent = "Вітаємо, " + savedName + "!";
+        }
+    </script>
 </body>
 </html>
