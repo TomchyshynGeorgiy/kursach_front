@@ -6,6 +6,15 @@ body {
     align-items: center; /* Центруємо все по горизонталі */
     padding-top: 50px;
 }
+body {
+    min-height: 100vh; /* 100% висоти видимого екрана */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрує вміст вертикально */
+    align-items: center;     /* Центрує вміст горизонтально */
+    margin: 0;
+    background-color: #f4f4f9; /* Твій колір фону */
+}
 /* Додаємо плавність для всіх інпутів та кнопок */
 input, button, a {
     transition: all 0.3s ease;
