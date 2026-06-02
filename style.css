@@ -1,36 +1,37 @@
-/* Базові налаштування */
 body {
     margin: 0;
-    background-color: #f4f4f9;
+    background-color: #020617; 
     font-family: Arial, sans-serif;
-    color: #1c1e21;
+    color: #F1F5F9; 
 }
 
 .main-wrapper {
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between; 
     align-items: center;
-    padding: 20px;
+    max-width: 1100px; 
+    margin: 0 auto;    
+    padding: 0 20px;
     box-sizing: border-box;
+    gap: 40px;
 }
 
-/* Форма та Картки */
 form, .profile-card {
-    background-color: white;
-    padding: 20px;
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px; 
     width: 100%;
-    max-width: 350px;
+    width: 380px; 
     box-sizing: border-box;
 }
 
-/* Пароль з оком */
 .password-container {
     position: relative;
     display: flex;
@@ -39,18 +40,21 @@ form, .profile-card {
 }
 
 input {
+    background-color: #1e293b; 
+    color: #F1F5F9; 
     padding: 12px;
-    border: 1px solid #ddd;
+    border: 1px solid #334155; 
     border-radius: 6px;
     width: 100%;
     box-sizing: border-box;
     font-size: 16px;
+    transition: all 0.3s ease;
 }
 
 input:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    border-color: #00ADD8;
+    box-shadow: 0 0 8px rgba(0, 173, 216, 0.3);
 }
 
 #togglePassword {
@@ -64,9 +68,8 @@ input:focus {
     padding: 0;
 }
 
-/* Кнопки */
 button[type="submit"], .profile-card button {
-    background-color: #007bff;
+    background-color: #2563EB; 
     color: white;
     padding: 12px;
     border: none;
@@ -78,7 +81,7 @@ button[type="submit"], .profile-card button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #60A5FA; 
 }
 
 button:active {
@@ -87,15 +90,14 @@ button:active {
 
 .signup-link {
     text-align: center;
-    color: #007bff;
+    color: #60A5FA; 
     text-decoration: none;
     font-size: 14px;
     margin-top: 5px;
 }
 
-/* Прогрес-бар */
 .progress-container {
-    background: #eee;
+    background: #1e293b; 
     border-radius: 10px;
     height: 8px;
     width: 100%;
@@ -103,27 +105,343 @@ button:active {
 }
 
 .progress-bar {
-    background: #28a745;
+    background: #00ADD8; 
     height: 100%;
     transition: width 0.5s ease;
 }
-/* Зменшуємо відступи у списку курсів */
+
 #course-list {
-    gap: 10px;     /* було 15px або 20px */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;     
     margin-top: 10px;
 }
 
-/* Робимо самі картки курсів тоншими */
 .course-card {
-    padding: 10px 15px; /* було 15-20px з усіх боків */
-    margin-bottom: 0;   /* прибираємо зайві відступи знизу */
+    background-color: #1e293b; 
+    border-left: 5px solid #00ADD8;
+    border-radius: 8px;
+    padding: 10px 15px; 
+    margin-bottom: 0;   
 }
 
 .course-card h3 {
-    margin: 0 0 5px 0;  /* менше місця під заголовком */
-    font-size: 15px;    /* трохи менший шрифт */
+    margin: 0 0 5px 0;  
+    font-size: 15px;    
+    color: #F1F5F9; 
 }
 
 .course-card p {
-    margin: 2px 0 0 0;  /* мінімальний відступ для тексту з % */
+    margin: 2px 0 0 0;  
+    color: #94a3b8; 
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    max-width: 1100px;  
+    margin: 0 auto;    
+    padding: 20px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00ADD8; 
+    margin-right: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar .logo span {
+    color: #2563EB; 
+}
+
+.navbar nav {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar nav a {
+    color: #F1F5F9;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.3s;
+}
+
+.navbar nav a:hover, .navbar nav a.active {
+    color: #60A5FA; 
+}
+
+.content-left {
+    flex: 1;
+    max-width: 500px;
+}
+
+.content-left h1 {
+    font-size: 46px;
+    margin: 0 0 15px 0;
+    line-height: 1.1;
+}
+
+.content-left p {
+    color: #94a3b8;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.features-box {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    width: 80%;
+}
+
+.features-box h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: #F1F5F9;
+}
+
+.features-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.features-box li {
+    color: #00ADD8; 
+    margin-bottom: 12px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.content-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -60px; 
+}
+
+.profile-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #020617; 
+}
+.features-box, form, .profile-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.features-box:hover, form:hover, .profile-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7); 
+}
+
+button[type="submit"]:hover, .profile-card button:hover {
+    background-color: #3b82f6; 
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.5); 
+    transform: translateY(-2px); 
+}
+
+.course-card {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateX(8px); 
+    background-color: #334155; 
+}
+
+.dashboard-body {
+    background-color: #020617;
+    margin: 0;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: #0f172a;
+    border-right: 1px solid #1e293b;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.sidebar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00ADD8;
+    margin-bottom: 40px;
+}
+.sidebar .logo span { color: #2563EB; }
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1; 
+}
+
+.sidebar-nav a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav a:hover, .sidebar-nav a.active {
+    background-color: #1e293b;
+    color: #F1F5F9;
+    transform: translateX(5px); 
+}
+
+.logout-btn {
+    background: transparent;
+    color: #ef4444; 
+    border: 1px solid #ef4444;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #ef4444;
+    color: white;
+}
+
+.main-content {
+    flex: 1; 
+    padding: 40px 50px;
+    box-sizing: border-box;
+}
+
+.content-header h1 { margin: 0 0 5px 0; font-size: 32px; }
+.content-header p { color: #94a3b8; margin: 0 0 30px 0; }
+
+.section-title {
+    margin: 40px 0 20px 0;
+    font-size: 22px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 10px;
+}
+
+.stats-overview {
+    background-color: #0f172a;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+}
+
+@media (max-width: 768px) {
+    
+    .main-wrapper {
+        flex-direction: column; 
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .navbar {
+        flex-direction: column; 
+        gap: 15px;
+    }
+
+    .features-box {
+        width: 100%;
+        text-align: left; 
+        margin: 0 auto 30px auto;
+    }
+
+    .content-right {
+        margin-top: 0;
+        width: 100%;
+    }
+
+    .dashboard-container {
+        flex-direction: column; 
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #1e293b;
+        padding: 20px;
+        align-items: center;
+    }
+
+    .sidebar-nav {
+        flex-direction: row; 
+        flex-wrap: wrap; 
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .main-content {
+        padding: 20px; 
+    }
+
+    .content-header h1 {
+        font-size: 26px; 
+    }
+}
+
+input::-ms-reveal,
+input::-webkit-credentials-auto-fill-button {
+    display: none !important;
+}
+
+input[type="password"], input[type="text"] {
+    padding-right: 40px; 
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5; 
+    transition: opacity 0.3s ease, transform 0.2s ease; 
+}
+
+.toggle-password-btn:hover, 
+.toggle-password-btn:focus {
+    opacity: 1;
+    transform: scale(1.1);
+    background-color: transparent !important; 
+    outline: none !important; 
+    box-shadow: none !important; 
 }

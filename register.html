@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Платформа для навчання</title>
+    <title>Реєстрація | GO STUDY</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
@@ -11,7 +11,7 @@
     <header class="navbar">
         <div class="logo"><span>≡</span> GO STUDY</div>
         <nav>
-            <a href="#" class="active">About</a>
+            <a href="#">About</a>
             <a href="#">Features</a>
             <a href="#">Showcase</a>
             <a href="#">Docs</a>
@@ -22,8 +22,8 @@
     <div class="main-wrapper">
         
         <div class="content-left">
-            <h1>ПЛАТФОРМА ДЛЯ НАВЧАННЯ</h1>
-            <p>Будуй ефективні навички. Проста, потужна та надійна платформа для твого сучасного розвитку.</p>
+            <h1>ПОЧНИ СВІЙ ШЛЯХ</h1>
+            <p>Приєднуйся до платформи та відкрий доступ до найкращих матеріалів для свого розвитку прямо зараз.</p>
             
             <div class="features-box">
                 <h3>WHY STUDY WITH US?</h3>
@@ -37,13 +37,14 @@
         </div>
 
         <div class="content-right">
-            <form id="loginForm">
-                <h2 style="text-align: center; margin: 0 0 20px 0; color: #F1F5F9; font-size: 24px;">Вхід в систему</h2>
+            <form id="registerForm">
+                <h2 style="text-align: center; margin: 0 0 20px 0; color: #F1F5F9; font-size: 24px;">Створення акаунту</h2>
                 
-                <input type="text" id="loginField" placeholder="Логін" required>
+                <input type="text" id="regLogin" placeholder="Придумайте логін" required>
+                <input type="email" id="regEmail" placeholder="Ваш Email" required>
                 
                 <div class="password-container">
-                    <input type="password" id="passwordField" placeholder="Пароль" required>
+                    <input type="password" id="regPassword" placeholder="Придумайте пароль" required>
                     <button type="button" class="toggle-password-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F1F5F9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -52,10 +53,21 @@
                     </button>
                 </div>
                 
-                <button type="submit">Увійти</button>
-                <a href="register.html" class="signup-link">Ще не маєте акаунту? Зареєструватися</a>
+                <div class="password-container">
+                    <input type="password" id="regConfirmPassword" placeholder="Повторіть пароль" required>
+                    <button type="button" class="toggle-password-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F1F5F9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+                <button type="submit">Зареєструватися</button>
+                
+                <a href="index.html" class="signup-link">Вже є акаунт? Увійти</a>
             </form>
         </div>
+
     </div>
 </body>
 </html>

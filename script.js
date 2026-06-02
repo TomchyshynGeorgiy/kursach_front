@@ -1,34 +1,70 @@
-// Знаходимо елементи на сторінці
-const loginForm = document.querySelector('form');
-const loginInput = document.getElementById('loginField');
+const registerForm = document.getElementById('registerForm');
+if (registerForm) {
+    registerForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const newLogin = document.getElementById('regLogin').value;
+        localStorage.setItem('userName', newLogin);
+        window.location.href = 'index.html'; 
+    });
+}
 
-// Слухаємо, коли користувач натисне кнопку "Увійти"
-loginForm.addEventListener('submit', function(event) {
-    event.preventDefault(); 
-    
-    const name = loginInput.value;
-    const password = passwordField.value; // Додаємо отримання пароля
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const currentLogin = document.getElementById('loginField').value;
+        localStorage.setItem('userName', currentLogin);
+        window.location.href = 'profile.html';
+    });
+}
 
-    if (!name) {
-        alert("Будь ласка, введіть свій логін!");
-    } else if (!password) {
-        alert("Ви забули ввести пароль!"); // Перевірка на пустий пароль
-    } else {
-        localStorage.setItem('userName', name);
-        alert("Вітаємо, " + name + "! Переходимо до Вашого кабінету.");
-        window.location.href = "./profile.html"; 
-    }
+const toggleButtons = document.querySelectorAll('.toggle-password-btn');
+
+toggleButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        const svg = this.querySelector('svg');
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            svg.style.stroke = '#00ADD8'; 
+        } else {
+            input.type = 'password';
+            svg.style.stroke = '#F1F5F9'; 
+        }
+    });
 });
 
-// Твій попередній код для ока (переконайся, що він теж тут)
-const passwordField = document.getElementById('passwordField');
-const togglePassword = document.getElementById('togglePassword');
+const courseGrid = document.getElementById('courseGrid');
 
-// Перевіряємо, чи є кнопка "око" на цій сторінці
-if (togglePassword && passwordField) {
-    togglePassword.addEventListener('click', function () {
-        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordField.setAttribute('type', type);
-        this.textContent = type === 'password' ? '👁️' : '🙈';
+if (courseGrid) {
+    const courses = [
+        { title: 'Основи HTML/CSS', progress: 80, color: '#00ADD8' },
+        { title: 'JS для початківців', progress: 30, color: '#00ADD8' },
+        { title: 'Робота з Git та GitHub', progress: 100, color: '#28a745' },
+        { title: 'Основи баз даних', progress: 15, color: '#00ADD8' } 
+    ];
+
+    courseGrid.innerHTML = '';
+
+    courses.forEach(course => {
+        let statusText;
+        if (course.progress === 100) {
+            statusText = 'Виконано! ✅';
+        } else {
+            statusText = `Прогрес: ${course.progress}%`;
+        }
+
+        const cardHTML = `
+            <div class="course-card">
+                <h3>${course.title}</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: ${course.progress}%; background: ${course.color};"></div>
+                </div>
+                <p>${statusText}</p>
+            </div>
+        `;
+        
+        courseGrid.innerHTML += cardHTML;
     });
 }

@@ -1,58 +1,52 @@
 <!DOCTYPE html>
 <html lang="uk">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кабінет студента</title>
+    <title>Кабінет | GO STUDY</title>
     <link rel="stylesheet" href="style.css">
+    
+    <script src="script.js" defer></script>
 </head>
-<body>
-    <div class="main-wrapper">
-        <div class="profile-card">
-            <h1>Вітаємо, Студенте!</h1>
-            
-            <p>Ваш загальний прогрес навчання:</p>
-            <div class="progress-container">
-                <div class="progress-bar" style="width: 45%;"></div>
-            </div>
-            <p style="font-size: 14px; margin-bottom: 20px;">Завершено: 45%</p>
+<body class="dashboard-body">
 
-            <div id="course-list">
-                <div class="course-card">
-                    <h3>Основи HTML/CSS</h3>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: 80%;"></div>
-                    </div>
-                    <p>Прогрес: 80%</p>
-                </div>
+    <div class="dashboard-container">
+        
+        <aside class="sidebar">
+            <div class="logo"><span>≡</span> GO STUDY</div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active">📊 Дашборд</a>
+                <a href="#">📚 Мої курси</a>
+                <a href="#">⚙️ Налаштування</a>
+            </nav>
+            <button onclick="window.location.href='index.html'" class="logout-btn">🚪 Вийти</button>
+        </aside>
 
-                <div class="course-card">
-                    <h3>JavaScript для початківців</h3>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: 30%;"></div>
-                    </div>
-                    <p>Прогрес: 30%</p>
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Вітаємо, Студенте! 👋</h1>
+                <p>Ваш поточний прогрес навчання</p>
+            </header>
+
+            <div class="stats-overview">
+                <h3>Загальний прогрес</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 45%;"></div>
                 </div>
-                
-                <div class="course-card">
-                    <h3>Робота з Git та GitHub</h3>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: 100%; background: #28a745;"></div>
-                    </div>
-                    <p>Виконано! ✅</p>
-                </div>
+                <p style="margin-top: 10px; color: #94a3b8;">45% Завершено</p>
             </div>
 
-            <button onclick="window.location.href='index.html'" style="margin-top: 20px;">Вийти</button>
-        </div>
+            <h2 class="section-title">Ваші курси</h2>
+            <div class="course-grid" id="courseGrid">
+            </div>
+        </main>
+
     </div>
 
     <script>
-        // Беремо ім'я користувача з пам'яті браузера
         const savedName = localStorage.getItem('userName');
         if (savedName) {
-            // Оновлюємо заголовок персональним привітанням
-            document.querySelector('h1').textContent = "Вітаємо, " + savedName + "!";
+            document.querySelector('.content-header h1').textContent = "Вітаємо, " + savedName + "! 👋";
         }
     </script>
 </body>
