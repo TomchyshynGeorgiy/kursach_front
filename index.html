@@ -11,15 +11,15 @@
     <header class="navbar">
         <div class="logo"><span>≡</span> GO STUDY</div>
         <nav>
-            <a href="#" class="active">About</a>
-            <a href="#">Features</a>
-            <a href="#">Showcase</a>
-            <a href="#">Docs</a>
-            <a href="#">Community</a>
+            <a href="about.html">About</a>
+            <a href="features.html">Features</a>
+            <a href="showcase.html">Showcase</a>
+            <a href="docs.html">Docs</a>
+            <a href="community.html">Community</a>
         </nav>
     </header>
 
-    <div class="main-wrapper">
+<div class="main-wrapper">
         
         <div class="content-left">
             <h1>ПЛАТФОРМА ДЛЯ НАВЧАННЯ</h1>
@@ -33,6 +33,14 @@
                     <li>📈 Масштабованість</li>
                     <li>🌐 Дружня спільнота</li>
                 </ul>
+            </div>
+
+            <div class="floating-stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-info">
+                    <h4>Швидкий прогрес</h4>
+                    <p>+45% ефективності з нашою системою трекінгу</p>
+                </div>
             </div>
         </div>
 
@@ -52,10 +60,21 @@
                     </button>
                 </div>
                 
+                <p id="loginError" style="color: #ef4444; font-size: 13px; margin: -10px 0 10px 0; display: none; text-align: left;">❌ Невірний логін або пароль!</p>
+
+                <div class="form-options" style="margin-bottom: 20px;">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe"> Запам'ятати мене
+                    </label>
+                    <a href="#" class="forgot-password">Забули пароль?</a>
+                </div>
+
                 <button type="submit">Увійти</button>
                 <a href="register.html" class="signup-link">Ще не маєте акаунту? Зареєструватися</a>
             </form>
         </div>
+
     </div>
+    
 </body>
 </html>

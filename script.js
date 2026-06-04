@@ -2,19 +2,71 @@ const registerForm = document.getElementById('registerForm');
 if (registerForm) {
     registerForm.addEventListener('submit', function(event) {
         event.preventDefault();
+        
+        const pass1Input = document.getElementById('regPassword');
+        const pass2Input = document.getElementById('regConfirmPassword');
+        const errorMsg = document.getElementById('passwordError');
+        
+        const pass1 = pass1Input.value;
+        const pass2 = pass2Input.value;
+        
+        pass1Input.style.borderColor = '#334155';
+        pass2Input.style.borderColor = '#334155';
+        errorMsg.style.display = 'none';
+
+        if (pass1 !== pass2) {
+            pass1Input.style.borderColor = '#ef4444';
+            pass2Input.style.borderColor = '#ef4444';
+            errorMsg.style.display = 'block';
+            return; 
+        }
+
         const newLogin = document.getElementById('regLogin').value;
+        
+        localStorage.setItem('registeredLogin', newLogin);
+        localStorage.setItem('registeredPassword', pass1);
+        
         localStorage.setItem('userName', newLogin);
+        
         window.location.href = 'index.html'; 
     });
 }
 
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
+    const currentLoginInput = document.getElementById('loginField');
+    const currentPassInput = document.getElementById('passwordField');
+    const errorMsg = document.getElementById('loginError');
+
+    function hideError() {
+        currentLoginInput.style.borderColor = '#334155';
+        currentPassInput.style.borderColor = '#334155';
+        errorMsg.style.display = 'none';
+    }
+
+    currentLoginInput.addEventListener('input', hideError);
+    currentPassInput.addEventListener('input', hideError);
+
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        const currentLogin = document.getElementById('loginField').value;
-        localStorage.setItem('userName', currentLogin);
-        window.location.href = 'profile.html';
+        
+        const enteredLogin = currentLoginInput.value;
+        const enteredPass = currentPassInput.value;
+        
+        const savedLogin = localStorage.getItem('registeredLogin');
+        const savedPass = localStorage.getItem('registeredPassword');
+        
+        hideError(); 
+
+        if (enteredLogin === savedLogin && enteredPass === savedPass) {
+            localStorage.setItem('userName', enteredLogin);
+            window.location.href = 'profile.html';
+        } else {
+  
+            currentLoginInput.style.borderColor = '#ef4444';
+            currentPassInput.style.borderColor = '#ef4444';
+            errorMsg.style.display = 'block';
+        }
     });
 }
 
