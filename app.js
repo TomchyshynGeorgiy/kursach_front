@@ -41,4 +41,41 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+  
+    const registerForm = document.getElementById("registerForm"); 
+
+    if (registerForm) {
+        registerForm.addEventListener("submit", async (e) => {
+            e.preventDefault(); 
+
+            const usernameValue = document.getElementById("registerName").value; 
+            const emailValue = document.getElementById("registerEmail").value;
+            const passwordValue = document.getElementById("registerPassword").value;
+
+            try {
+      
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ 
+                        name: usernameValue,       
+                        email: emailValue, 
+                        password: passwordValue 
+                    })
+                });
+
+                if (response.ok) {
+                    alert("Реєстрація успішна! 🎉 Тепер ви можете увійти.");
+               
+                } else {
+                    alert("Помилка реєстрації. Перевір дані (можливо, така пошта вже є).");
+                }
+            } catch (error) {
+                console.error("Помилка підключення:", error);
+                alert("Сервер недоступний!");
+            }
+        });
+    }
 });
