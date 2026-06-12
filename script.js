@@ -1,8 +1,5 @@
 const API_URL = "http://localhost:8080";
 
-// ==========================================
-// 1. ЛОГІКА РЕЄСТРАЦІЇ
-// ==========================================
 const registerForm = document.getElementById('registerForm');
 if (registerForm) {
     registerForm.addEventListener('submit', async function(event) {
@@ -19,7 +16,6 @@ if (registerForm) {
         pass2Input.style.borderColor = '#334155';
         errorMsg.style.display = 'none';
 
-        // Перевірка на збіг паролів
         if (pass1 !== pass2) {
             pass1Input.style.borderColor = '#ef4444';
             pass2Input.style.borderColor = '#ef4444';
@@ -31,7 +27,7 @@ if (registerForm) {
         const newEmail = document.getElementById('regEmail').value;
 
         try {
-            // СПРАВЖНІЙ ЗАПИТ НА СЕРВЕР ЗАМІСТЬ LOCALSTORAGE
+       
             const response = await fetch(`${API_URL}/auth/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -55,9 +51,6 @@ if (registerForm) {
     });
 }
 
-// ==========================================
-// 2. ЛОГІКА ВХОДУ (ЛОГІН)
-// ==========================================
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     const currentLoginInput = document.getElementById('loginField');
@@ -76,13 +69,13 @@ if (loginForm) {
     loginForm.addEventListener('submit', async function(event) {
         event.preventDefault();
         
-        const enteredEmail = currentLoginInput.value; // Увага: сервер очікує email для входу!
+        const enteredEmail = currentLoginInput.value; 
         const enteredPass = currentPassInput.value;
         
         hideError(); 
 
         try {
-            // СПРАВЖНІЙ ЗАПИТ НА СЕРВЕР ДЛЯ ВХОДУ
+    
             const response = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -94,8 +87,8 @@ if (loginForm) {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem("userToken", data.token); // Зберігаємо справжній ключ доступу від сервера
-                localStorage.setItem('userName', enteredEmail); // Для відображення імені в профілі
+                localStorage.setItem("userToken", data.token);
+                localStorage.setItem('userName', enteredEmail); 
                 window.location.href = 'profile.html';
             } else {
                 currentLoginInput.style.borderColor = '#ef4444';
@@ -109,9 +102,6 @@ if (loginForm) {
     });
 }
 
-// ==========================================
-// 3. UI ЕЛЕМЕНТИ (Око для пароля та Курси)
-// ==========================================
 const toggleButtons = document.querySelectorAll('.toggle-password-btn');
 
 toggleButtons.forEach(button => {
