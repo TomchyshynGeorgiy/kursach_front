@@ -41,50 +41,5 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-  
-    const registerForm = document.getElementById("registerForm");
-
-    if (registerForm) {
-        registerForm.addEventListener("submit", async (e) => {
-            e.preventDefault(); 
-
-            const loginValue = document.getElementById("regLogin").value; 
-            const emailValue = document.getElementById("regEmail").value;
-            const passwordValue = document.getElementById("regPassword").value;
-            const confirmPasswordValue = document.getElementById("regConfirmPassword").value;
-            const passwordError = document.getElementById("passwordError");
-
-            if (passwordValue !== confirmPasswordValue) {
-                passwordError.style.display = "block";
-                return; 
-            } else {
-                passwordError.style.display = "none"; 
-            }
-
-            try {
-                
-                const response = await fetch(`${API_URL}/auth/register`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ 
-                        username: loginValue, 
-                        email: emailValue, 
-                        password: passwordValue 
-                    })
-                });
-
-                if (response.ok) {
-                    alert("Реєстрація успішна! 🎉 Тепер ви можете увійти.");
-                    window.location.href = "index.html"; 
-                } else {
-                    alert("Помилка реєстрації. Можливо, такий користувач або email вже існує.");
-                }
-            } catch (error) {
-                console.error("Помилка підключення:", error);
-                alert("Сервер недоступний!");
-            }
-        });
-    }
+    
 });

@@ -1,6 +1,11 @@
+const API_URL = "http://localhost:8080";
+
+// ==========================================
+// 1. ЛОГІКА РЕЄСТРАЦІЇ
+// ==========================================
 const registerForm = document.getElementById('registerForm');
 if (registerForm) {
-    registerForm.addEventListener('submit', function(event) {
+    registerForm.addEventListener('submit', async function(event) {
         event.preventDefault();
         
         const pass1Input = document.getElementById('regPassword');
@@ -14,6 +19,7 @@ if (registerForm) {
         pass2Input.style.borderColor = '#334155';
         errorMsg.style.display = 'none';
 
+        // Перевірка на збіг паролів
         if (pass1 !== pass2) {
             pass1Input.style.borderColor = '#ef4444';
             pass2Input.style.borderColor = '#ef4444';
@@ -22,16 +28,36 @@ if (registerForm) {
         }
 
         const newLogin = document.getElementById('regLogin').value;
-        
-        localStorage.setItem('registeredLogin', newLogin);
-        localStorage.setItem('registeredPassword', pass1);
-        
-        localStorage.setItem('userName', newLogin);
-        
-        window.location.href = 'index.html'; 
+        const newEmail = document.getElementById('regEmail').value;
+
+        try {
+            // СПРАВЖНІЙ ЗАПИТ НА СЕРВЕР ЗАМІСТЬ LOCALSTORAGE
+            const response = await fetch(`${API_URL}/auth/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    username: newLogin, 
+                    email: newEmail, 
+                    password: pass1 
+                })
+            });
+
+            if (response.ok) {
+                alert("Реєстрація успішна! 🎉 Тепер ви можете увійти.");
+                window.location.href = 'index.html'; 
+            } else {
+                alert("Помилка. Можливо, такий користувач або email вже існує в базі.");
+            }
+        } catch (error) {
+            console.error("Помилка:", error);
+            alert("Сервер недоступний!");
+        }
     });
 }
 
+// ==========================================
+// 2. ЛОГІКА ВХОДУ (ЛОГІН)
+// ==========================================
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
     const currentLoginInput = document.getElementById('loginField');
@@ -47,29 +73,45 @@ if (loginForm) {
     currentLoginInput.addEventListener('input', hideError);
     currentPassInput.addEventListener('input', hideError);
 
-    loginForm.addEventListener('submit', function(event) {
+    loginForm.addEventListener('submit', async function(event) {
         event.preventDefault();
         
-        const enteredLogin = currentLoginInput.value;
+        const enteredEmail = currentLoginInput.value; // Увага: сервер очікує email для входу!
         const enteredPass = currentPassInput.value;
-        
-        const savedLogin = localStorage.getItem('registeredLogin');
-        const savedPass = localStorage.getItem('registeredPassword');
         
         hideError(); 
 
-        if (enteredLogin === savedLogin && enteredPass === savedPass) {
-            localStorage.setItem('userName', enteredLogin);
-            window.location.href = 'profile.html';
-        } else {
-  
-            currentLoginInput.style.borderColor = '#ef4444';
-            currentPassInput.style.borderColor = '#ef4444';
-            errorMsg.style.display = 'block';
+        try {
+            // СПРАВЖНІЙ ЗАПИТ НА СЕРВЕР ДЛЯ ВХОДУ
+            const response = await fetch(`${API_URL}/auth/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    email: enteredEmail, 
+                    password: enteredPass 
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem("userToken", data.token); // Зберігаємо справжній ключ доступу від сервера
+                localStorage.setItem('userName', enteredEmail); // Для відображення імені в профілі
+                window.location.href = 'profile.html';
+            } else {
+                currentLoginInput.style.borderColor = '#ef4444';
+                currentPassInput.style.borderColor = '#ef4444';
+                errorMsg.style.display = 'block';
+            }
+        } catch (error) {
+            console.error("Помилка:", error);
+            alert("Сервер недоступний!");
         }
     });
 }
 
+// ==========================================
+// 3. UI ЕЛЕМЕНТИ (Око для пароля та Курси)
+// ==========================================
 const toggleButtons = document.querySelectorAll('.toggle-password-btn');
 
 toggleButtons.forEach(button => {
