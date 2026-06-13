@@ -2,7 +2,6 @@ const API_URL = "http://localhost:8080";
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    
     const isLoginPage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/';
     if (isLoginPage) {
         localStorage.removeItem('userToken');
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
-        
         const emailInput = document.getElementById('regEmail');
         const welcomeTitle = document.querySelector('.auth-box h2');
         
@@ -62,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (response.ok) {
                     alert("Реєстрація успішна! 🎉 Тепер ви можете увійти.");
-                    
                     window.location.href = 'index.html'; 
                 } else {
                     alert("Помилка. Можливо, такий email вже існує в базі.");
@@ -110,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     const data = await response.json();
                     
-                    localStorage.setItem("userToken", data.token);
+                    localStorage.setItem("userToken", data.token); 
                     localStorage.setItem('userName', enteredEmail); 
                     
                     window.location.href = 'profile.html';
@@ -129,9 +126,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const toggleButtons = document.querySelectorAll('.toggle-password-btn');
 
     toggleButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
+            e.preventDefault(); 
             
-            const input = this.previousElementSibling;
+            let input = this.previousElementSibling;
+            if (!input || input.tagName !== 'INPUT') {
+                input = this.parentElement.querySelector('input');
+            }
+
             const svg = this.querySelector('svg');
             
             if (input && input.tagName === 'INPUT') {
@@ -147,5 +149,117 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    const addCourseForm = document.getElementById('addCourseForm');
+    if (addCourseForm) {
+        addCourseForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+                alert("Немає доступу. Будь ласка, авторизуйтесь.");
+                return;
+            }
+            
+            const courseTitle = document.getElementById('courseTitle').value;
+            const courseDesc = document.getElementById('courseDesc').value;
+
+            const courseData = {
+                title: courseTitle, 
+                description: courseDesc
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/admin/courses`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(courseData)
+                });
+
+                if (response.ok || response.status === 201) {
+                    alert("Курс успішно створено! 🚀");
+                    addCourseForm.reset(); 
+                } else {
+                    alert("Помилка створення. Перевірте, чи є у вас права Адміна.");
+                }
+            } catch (error) {
+                console.error("Сервер недоступний:", error);
+            }
+        });
+    }
+
+    const enrollBtn = document.getElementById('enrollBtn');
+    if (enrollBtn) {
+        enrollBtn.addEventListener('click', async function(e) {
+            e.preventDefault(); 
+            
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+                alert("Будь ласка, увійдіть в акаунт!");
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const courseId = 1; 
+
+            try {
+                const response = await fetch(`${API_URL}/api/courses/${courseId}/enroll`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok || response.status === 201) {
+                    window.location.href = 'lesson.html';
+                } else {
+                    alert("Помилка запису на курс. Можливо, ви вже записані.");
+                    window.location.href = 'lesson.html';
+                }
+            } catch (error) {
+                console.error("Помилка:", error);
+            }
+        });
+    }
+
+    async function loadCourses() {
+        const coursesGrid = document.querySelector('.courses-grid'); 
+        if (!coursesGrid) return;
+
+        const token = localStorage.getItem('userToken');
+
+        try {
+            const response = await fetch(`${API_URL}/api/courses`, {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+
+            if (response.ok) {
+                const courses = await response.json();
+                
+                coursesGrid.innerHTML = ''; 
+
+                courses.forEach(course => {
+                    const cardHTML = `
+                        <div class="features-box" style="margin: 0; display: flex; flex-direction: column;">
+                            <h3 style="color: #00ADD8; margin-bottom: 10px;">${course.title}</h3>
+                            <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">${course.description}</p>
+                            <a href="course-info.html" style="background-color: #00ADD8; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold;">Детальніше</a>
+                        </div>
+                    `;
+                    coursesGrid.innerHTML += cardHTML;
+                });
+            }
+        } catch (error) {
+            console.error("Не вдалося завантажити курси:", error);
+        }
+    }
+
+    if (window.location.pathname.includes('profile.html')) {
+        loadCourses();
+    }
 
 }); 
