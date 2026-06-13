@@ -209,63 +209,26 @@ if (addCourseForm) {
     });
 }
 
-    const enrollBtn = document.getElementById('enrollBtn');
-    if (enrollBtn) {
-        enrollBtn.addEventListener('click', async function(e) {
-            e.preventDefault(); 
-            
-            const token = localStorage.getItem('userToken');
-            if (!token) {
-                alert("Будь ласка, увійдіть в акаунт!");
-                window.location.href = 'index.html';
-                return;
-            }
-
-            const courseId = 1; 
-
-            try {
-                const response = await fetch(`${API_URL}/api/courses/${courseId}/enroll`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + token,
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (response.ok || response.status === 201) {
-                    window.location.href = 'lesson.html';
-                } else {
-                    alert("Помилка запису на курс. Можливо, ви вже записані.");
-                    window.location.href = 'lesson.html';
-                }
-            } catch (error) {
-                console.error("Помилка:", error);
-            }
-        });
-    }
-
     async function loadCourses() {
         const coursesGrid = document.querySelector('.courses-grid'); 
         if (!coursesGrid) return;
-
         const token = localStorage.getItem('userToken');
 
         try {
             const response = await fetch(`${API_URL}/api/courses`, {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
-
             if (response.ok) {
                 const courses = await response.json();
-                
                 coursesGrid.innerHTML = ''; 
 
                 courses.forEach(course => {
+                    
                     const cardHTML = `
                         <div class="features-box" style="margin: 0; display: flex; flex-direction: column;">
                             <h3 style="color: #00ADD8; margin-bottom: 10px;">${course.title}</h3>
                             <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">${course.description}</p>
-                            <a href="course-info.html" style="background-color: #00ADD8; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold;">Детальніше</a>
+                            <a href="course-info.html?id=${course.id}" style="background-color: #00ADD8; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold;">Детальніше</a>
                         </div>
                     `;
                     coursesGrid.innerHTML += cardHTML;
@@ -275,11 +238,69 @@ if (addCourseForm) {
             console.error("Не вдалося завантажити курси:", error);
         }
     }
+    if (window.location.pathname.includes('profile.html')) { loadCourses(); }
 
-    if (window.location.pathname.includes('profile.html')) {
-        loadCourses();
+    const enrollBtn = document.getElementById('enrollBtn');
+    if (enrollBtn) {
+        enrollBtn.addEventListener('click', async function(e) {
+            e.preventDefault(); 
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+                alert("Будь ласка, увійдіть в акаунт!");
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseId = urlParams.get('id') || 1; 
+
+            try {
+                const response = await fetch(`${API_URL}/api/courses/${courseId}/enroll`, {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok || response.status === 201) {
+                    window.location.href = `lesson.html?courseId=${courseId}&lessonId=1`;
+                } else {
+                    alert("Помилка запису на курс. Можливо, ви вже записані.");
+                    window.location.href = `lesson.html?courseId=${courseId}&lessonId=1`;
+                }
+            } catch (error) {
+                console.error("Помилка:", error);
+            }
+        });
     }
 
+    const completeLessonBtn = document.getElementById('completeLessonBtn');
+    if (completeLessonBtn) {
+        completeLessonBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const token = localStorage.getItem('userToken');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentLessonId = parseInt(urlParams.get('lessonId')) || 1;
+            const courseId = urlParams.get('courseId') || 1;
+
+            try {
+                const response = await fetch(`${API_URL}/api/lessons/${currentLessonId}/complete`, {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ completed: true })
+                });
+
+                if (response.ok || response.status === 200 || response.status === 201) {
+                    alert("⚔️ Боса повалено! XP нараховано. Переходимо до наступного уроку!");
+                    window.location.href = `lesson.html?courseId=${courseId}&lessonId=${currentLessonId + 1}`;
+                } else {
+                    alert("Помилка збереження прогресу.");
+                }
+            } catch (error) {
+                console.error("Помилка завершення:", error);
+                alert("Сервер недоступний.");
+            }
+        });
+    }
 }); 
 
 const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
