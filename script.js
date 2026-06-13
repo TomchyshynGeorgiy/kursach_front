@@ -150,46 +150,64 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    const addCourseForm = document.getElementById('addCourseForm');
-    if (addCourseForm) {
-        addCourseForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
+const addCourseForm = document.getElementById('addCourseForm');
+if (addCourseForm) {
+    addCourseForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const token = localStorage.getItem('userToken');
+        if (!token) { alert("Немає доступу!"); return; }
+        
+        const courseData = {
+            title: document.getElementById('courseTitle').value, 
+            description: document.getElementById('courseDesc').value
+        };
+
+        try {
             
-            const token = localStorage.getItem('userToken');
-            if (!token) {
-                alert("Немає доступу. Будь ласка, авторизуйтесь.");
-                return;
-            }
-            
-            const courseTitle = document.getElementById('courseTitle').value;
-            const courseDesc = document.getElementById('courseDesc').value;
+            const response = await fetch(`${API_URL}/api/admin/courses`, {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+                body: JSON.stringify(courseData)
+            });
 
-            const courseData = {
-                title: courseTitle, 
-                description: courseDesc
-            };
+            if (response.ok || response.status === 201) {
+                const data = await response.json();
+                const courseId = data.id; 
+                alert("Курс створено! Тепер додамо перший модуль.");
+                addCourseForm.reset(); 
 
-            try {
-                const response = await fetch(`${API_URL}/api/admin/courses`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + token,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(courseData)
-                });
-
-                if (response.ok || response.status === 201) {
-                    alert("Курс успішно створено! 🚀");
-                    addCourseForm.reset(); 
-                } else {
-                    alert("Помилка створення. Перевірте, чи є у вас права Адміна.");
+                const moduleTitle = prompt("Введіть назву першого модуля (напр. 'Основи'):");
+                if (moduleTitle) {
+                    const modRes = await fetch(`${API_URL}/api/admin/courses/${courseId}/modules`, {
+                        method: 'POST',
+                        headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ title: moduleTitle })
+                    });
+                    
+                    if (modRes.ok || modRes.status === 201) {
+                        const modData = await modRes.json();
+                        const moduleId = modData.id;
+                        
+                        const lessonTitle = prompt("Модуль створено! Введіть назву першого уроку:");
+                        if (lessonTitle) {
+                            await fetch(`${API_URL}/api/admin/modules/${moduleId}/lessons`, {
+                                method: 'POST',
+                                headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ title: lessonTitle, content: "Текст уроку..." })
+                            });
+                            alert("Успіх! Курс, модуль та урок повністю зібрані! 🚀");
+                        }
+                    }
                 }
-            } catch (error) {
-                console.error("Сервер недоступний:", error);
+            } else {
+                alert("Помилка створення. Перевірте права Адміна.");
             }
-        });
-    }
+        } catch (error) {
+            console.error("Помилка:", error);
+        }
+    });
+}
 
     const enrollBtn = document.getElementById('enrollBtn');
     if (enrollBtn) {
@@ -263,3 +281,104 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 }); 
+
+const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+
+sidebarLinks.forEach(link => {
+    if (link.textContent.includes('Мої курси')) {
+        link.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            link.classList.add('active');
+
+            const token = localStorage.getItem('userToken');
+            const coursesGrid = document.querySelector('.courses-grid');
+            if (!coursesGrid) return;
+
+            document.querySelector('h1').textContent = "Мої курси 📚";
+            coursesGrid.innerHTML = '<p style="color: #94a3b8;">Завантаження...</p>';
+
+            try {
+                const response = await fetch(`${API_URL}/api/profile/courses`, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+
+                if (response.ok) {
+                    const myCourses = await response.json();
+                    coursesGrid.innerHTML = '';
+                    
+                    if (myCourses.length === 0) {
+                        coursesGrid.innerHTML = '<p style="color: #94a3b8;">Ви ще не записані на жоден курс.</p>';
+                        return;
+                    }
+
+                    myCourses.forEach(course => {
+                        coursesGrid.innerHTML += `
+                            <div class="features-box" style="margin: 0; border: 1px solid #10b981;">
+                                <h3 style="color: #10b981; margin-bottom: 10px;">${course.title}</h3>
+                                <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Ви записані на цей курс.</p>
+                                <a href="lesson.html" style="background-color: #10b981; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none;">Продовжити навчання</a>
+                            </div>
+                        `;
+                    });
+                }
+            } catch (err) {
+                coursesGrid.innerHTML = '<p style="color: #ef4444;">Помилка завантаження.</p>';
+            }
+        });
+    }
+});
+
+sidebarLinks.forEach(link => {
+    if (link.textContent.includes('Налаштування')) {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            link.classList.add('active');
+
+            const coursesGrid = document.querySelector('.courses-grid');
+            if (!coursesGrid) return;
+
+            document.querySelector('h1').textContent = "Налаштування профілю ⚙️";
+            
+            coursesGrid.innerHTML = `
+                <div class="features-box" style="grid-column: 1 / -1; max-width: 500px;">
+                    <form id="settingsForm" style="display: flex; flex-direction: column; gap: 15px;">
+                        <input type="text" id="updName" placeholder="Нове ім'я" required style="padding: 10px; border-radius: 6px; background: #1e293b; color: white; border: 1px solid #334155;">
+                        <input type="email" id="updEmail" placeholder="Новий Email" required style="padding: 10px; border-radius: 6px; background: #1e293b; color: white; border: 1px solid #334155;">
+                        <button type="submit" style="background-color: #00ADD8; color: #0f172a; font-weight: bold; padding: 10px; border-radius: 6px; border: none; cursor: pointer;">Зберегти зміни</button>
+                    </form>
+                </div>
+            `;
+
+            document.getElementById('settingsForm').addEventListener('submit', async function(ev) {
+                ev.preventDefault();
+                const token = localStorage.getItem('userToken');
+                const newName = document.getElementById('updName').value;
+                const newEmail = document.getElementById('updEmail').value;
+
+                try {
+                    const response = await fetch(`${API_URL}/api/profile`, {
+                        method: 'PUT',
+                        headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: newName, email: newEmail })
+                    });
+
+                    if (response.ok) {
+                        alert("Профіль успішно оновлено!");
+                        
+                        document.getElementById('profileName').textContent = newName;
+                        document.querySelector('.avatar').textContent = newName.charAt(0).toUpperCase();
+                        localStorage.setItem('userName', newEmail);
+                    } else {
+                        alert("Помилка оновлення профілю.");
+                    }
+                } catch (error) {
+                    alert("Сервер недоступний.");
+                }
+            });
+        });
+    }
+});
