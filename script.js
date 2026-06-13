@@ -106,13 +106,14 @@ const toggleButtons = document.querySelectorAll('.toggle-password-btn');
 
 toggleButtons.forEach(button => {
     button.addEventListener('click', function() {
-        const input = this.previousElementSibling;
+        
+        const input = this.parentElement.querySelector('input');
         const svg = this.querySelector('svg');
         
-        if (input.type === 'password') {
+        if (input && input.type === 'password') {
             input.type = 'text';
             svg.style.stroke = '#00ADD8'; 
-        } else {
+        } else if (input) {
             input.type = 'password';
             svg.style.stroke = '#F1F5F9'; 
         }
