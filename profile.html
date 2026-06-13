@@ -62,10 +62,34 @@
     </div>
 
     <script>
-        const savedName = localStorage.getItem('userName');
-        if (savedName) {
-            document.querySelector('.content-header h1').textContent = "Вітаємо, " + savedName + "! 👋";
+       
+        const token = localStorage.getItem('userToken');
+        
+        if (!token) {
+            window.location.href = 'index.html'; 
         }
+
+        async function loadProfile() {
+            try {
+                const response = await fetch('http://localhost:8080/api/profile', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                
+                if (response.ok) {
+                    const userData = await response.json();
+                    
+                    document.getElementById('profileName').textContent = userData.name;
+                    
+                    document.querySelector('.avatar').textContent = userData.name.charAt(0).toUpperCase();
+                } else {
+                    console.error("Токен протермінувався або недійсний");
+                }
+            } catch (error) {
+                console.error("Сервер недоступний:", error);
+            }
+        }
+        
+        loadProfile();
     </script>
 </body>
 </html>
