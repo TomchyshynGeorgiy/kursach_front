@@ -32,7 +32,7 @@ if (registerForm) {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 
-                    username: newLogin, 
+                    name: newLogin, 
                     email: newEmail, 
                     password: pass1 
                 })
