@@ -62,15 +62,25 @@
     </div>
 
     <script>
-       
-        const token = localStorage.getItem('userToken');
-        
-        if (!token) {
-            window.location.href = 'index.html'; 
-        }
+        document.addEventListener('DOMContentLoaded', async function() {
+            const token = localStorage.getItem('userToken');
+            const savedEmail = localStorage.getItem('userName') || 'Студент';
+            
+            if (!token) {
+                window.location.href = 'index.html'; 
+                return;
+            }
 
-        async function loadProfile() {
+            function updateUI(displayName) {
+                const nameElement = document.getElementById('profileName');
+                if (nameElement) nameElement.textContent = displayName;
+                
+                const avatarElement = document.querySelector('.avatar');
+                if (avatarElement) avatarElement.textContent = displayName.charAt(0).toUpperCase();
+            }
+
             try {
+                
                 const response = await fetch('http://localhost:8080/api/profile', {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
@@ -78,18 +88,21 @@
                 if (response.ok) {
                     const userData = await response.json();
                     
-                    document.getElementById('profileName').textContent = userData.name;
-                    
-                    document.querySelector('.avatar').textContent = userData.name.charAt(0).toUpperCase();
+                    if (userData && userData.name) {
+                        updateUI(userData.name);
+                    } else {
+                        
+                        updateUI(savedEmail.split('@')[0]);
+                    }
                 } else {
-                    console.error("Токен протермінувався або недійсний");
+                    updateUI(savedEmail.split('@')[0]);
                 }
             } catch (error) {
-                console.error("Сервер недоступний:", error);
+                console.error("Помилка підключення:", error);
+                updateUI(savedEmail.split('@')[0]);
             }
-        }
-        
-        loadProfile();
+        });
     </script>
+
 </body>
 </html>
