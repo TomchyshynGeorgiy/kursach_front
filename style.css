@@ -386,17 +386,6 @@ button[type="submit"]:hover, .profile-card button:hover {
     cursor: pointer;
 }
 
-.forgot-password {
-    color: #94a3b8;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.forgot-password:hover {
-    color: #00ADD8; 
-    text-decoration: underline;
-}
-
 .floating-stat-card {
     display: flex;
     align-items: center;
@@ -556,4 +545,281 @@ input:-webkit-autofill:active  {
     -webkit-text-fill-color: #f1f5f9 !important;
     
     transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Mobile MVP polish */
+textarea,
+select,
+button {
+    font: inherit;
+    box-sizing: border-box;
+}
+
+textarea,
+select {
+    max-width: 100%;
+}
+
+@media (max-width: 900px) {
+    .navbar {
+        padding: 16px;
+        gap: 14px;
+        align-items: flex-start;
+    }
+
+    .navbar nav {
+        width: 100%;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .navbar nav a {
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: 9px 12px;
+    }
+
+    .main-wrapper {
+        min-height: auto;
+        padding: 20px 16px 40px;
+        gap: 28px;
+    }
+
+    .content-left,
+    .content-right {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .content-left h1 {
+        font-size: 34px;
+    }
+
+    form,
+    .profile-card {
+        width: 100%;
+        max-width: 440px;
+        padding: 22px;
+    }
+
+    .features-box {
+        width: 100%;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .floating-stat-card {
+        max-width: none;
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 24px;
+        animation: none;
+    }
+
+    .dashboard-container {
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .sidebar,
+    .dashboard-container .sidebar[style] {
+        width: 100% !important;
+        min-width: 0 !important;
+        border-right: none;
+        border-bottom: 1px solid #1e293b;
+        padding: 16px !important;
+    }
+
+    .sidebar .logo {
+        margin-bottom: 16px;
+    }
+
+    .sidebar-nav {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .sidebar-nav a {
+        flex: 1 1 145px;
+        text-align: center;
+        padding: 10px 12px;
+        font-size: 14px;
+        transform: none !important;
+    }
+
+    .logout-btn,
+    [data-logout] {
+        width: 100%;
+        margin-top: 8px !important;
+    }
+
+    .main-content,
+    .dashboard-container .main-content[style] {
+        width: 100%;
+        padding: 22px 16px !important;
+        box-sizing: border-box;
+    }
+
+    .dashboard-container .main-content[style*="grid"] {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+        max-width: 100% !important;
+    }
+
+    #profileContent {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    .course-grid,
+    .courses-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 560px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        align-items: center;
+        text-align: center;
+    }
+
+    .navbar .logo {
+        margin-right: 0;
+        font-size: 22px;
+    }
+
+    .navbar nav {
+        justify-content: center;
+    }
+
+    .navbar nav a {
+        flex: 1 1 calc(50% - 10px);
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .main-wrapper {
+        padding: 12px 14px 32px;
+        text-align: center;
+    }
+
+    .content-left h1 {
+        font-size: 30px;
+        line-height: 1.15;
+    }
+
+    .content-left p {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    form,
+    .profile-card {
+        padding: 18px;
+        border-radius: 10px;
+    }
+
+    input,
+    textarea,
+    select,
+    button[type="submit"],
+    .profile-card button {
+        min-height: 46px;
+        font-size: 16px;
+    }
+
+    .form-options {
+        align-items: flex-start;
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .content-header h1,
+    #courseTitleHeading,
+    #lessonTitle {
+        font-size: 24px !important;
+        line-height: 1.2;
+    }
+
+    .content-header p,
+    #courseDescription {
+        font-size: 15px !important;
+    }
+
+    .main-content {
+        padding: 18px 12px !important;
+    }
+
+    .features-box {
+        padding: 18px !important;
+    }
+
+    .features-box:hover,
+    form:hover,
+    .profile-card:hover,
+    .course-card:hover {
+        transform: none;
+    }
+
+    .sidebar-nav {
+        flex-direction: column;
+    }
+
+    .sidebar-nav a {
+        flex: 1 1 auto;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #stepCourseBadge,
+    #stepModuleBadge,
+    #stepLessonBadge {
+        font-size: 13px;
+        padding: 8px 6px !important;
+        word-break: break-word;
+    }
+
+    #continueCourseBtn,
+    #previousLessonBtn,
+    #completeLessonBtn {
+        width: 100%;
+        margin-top: 8px;
+        white-space: normal;
+    }
+
+    .main-content div:has(> #previousLessonBtn),
+    .main-content div:has(> iframe) {
+        width: 100%;
+    }
+
+    .main-content div:has(> #previousLessonBtn) {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px;
+    }
+
+    .main-content div:has(> iframe) {
+        min-height: 360px !important;
+        height: 360px;
+        flex-grow: 0 !important;
+    }
+
+    #courseTitleHeading + div {
+        flex-wrap: wrap;
+        gap: 8px !important;
+    }
+
+    .main-content iframe {
+        min-height: 360px;
+    }
 }

@@ -1,108 +1,38 @@
 <!DOCTYPE html>
 <html lang="uk">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кабінет | GO STUDY</title>
     <link rel="stylesheet" href="style.css">
-    
     <script src="script.js" defer></script>
 </head>
 <body class="dashboard-body">
 
     <div class="dashboard-container">
-        
         <aside class="sidebar">
             <div class="logo"><span>≡</span> GO STUDY</div>
             <nav class="sidebar-nav">
-                <a href="#" class="active">📊 Дашборд</a>
-                <a href="#">📚 Мої курси</a>
-                <a href="#">⚙️ Налаштування</a>
-                <a href="admin.html" style="color: #94a3b8; margin-top: 20px;">👑 Адмін-панель</a>
+                <a href="#" id="dashboardTab" class="active">📊 Дашборд</a>
+                <a href="#" id="myCoursesTab">📚 Мої курси</a>
+                <a href="#" id="settingsTab">⚙️ Налаштування</a>
+                <a href="admin.html" id="adminLink" style="color: #94a3b8; margin-top: 20px;">👑 Адмін-панель</a>
             </nav>
-            <button onclick="window.location.href='index.html'" class="logout-btn">🚪 Вийти</button>
+            <button type="button" data-logout class="logout-btn">🚪 Вийти</button>
         </aside>
 
         <main class="main-content">
             <header class="content-header">
-                <h1>Доступні курси 🚀</h1>
+                <h1 id="profileHeading">Доступні курси 🚀</h1>
                 <div class="user-profile">
                     <span id="profileName">Студент</span>
                     <div class="avatar">S</div>
                 </div>
             </header>
 
-           <div class="courses-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;"></div>
-                
-                <div class="features-box" style="margin: 0; display: flex; flex-direction: column;">
-                    <h3 style="color: #00ADD8; margin-bottom: 10px;">Основи мови Go</h3>
-                    <p style="color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 20px; flex-grow: 1;">
-                        Створення швидких серверів, робота з базами даних та розробка власного REST API з нуля.
-                    </p>
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1e293b; padding-top: 15px;">
-                        <span style="font-size: 13px; color: #10b981;">10 уроків</span>
-                        <a href="course-info.html" style="background-color: #00ADD8; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold; transition: 0.3s;">Детальніше</a>
-                    </div>
-                </div>
-
-                <div class="features-box" style="margin: 0; display: flex; flex-direction: column; opacity: 0.7;">
-                    <h3 style="color: #F1F5F9; margin-bottom: 10px;">Frontend: HTML/CSS</h3>
-                    <p style="color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 20px; flex-grow: 1;">
-                        Верстка сучасних сайтів, робота з Flexbox, Grid та створення крутих анімацій.
-                    </p>
-                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1e293b; padding-top: 15px;">
-                        <span style="font-size: 13px; color: #94a3b8;">В розробці</span>
-                        <button disabled style="background-color: #334155; color: #94a3b8; padding: 8px 16px; border-radius: 6px; border: none; font-size: 14px; cursor: not-allowed;">Незабаром</button>
-                    </div>
-                </div>
-
-            </div>
+            <div id="profileContent" class="courses-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;"></div>
         </main>
-
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            const token = localStorage.getItem('userToken');
-            const savedEmail = localStorage.getItem('userName') || 'Студент';
-            
-            if (!token) {
-                window.location.href = 'index.html'; 
-                return;
-            }
-
-            function updateUI(displayName) {
-                const nameElement = document.getElementById('profileName');
-                if (nameElement) nameElement.textContent = displayName;
-                
-                const avatarElement = document.querySelector('.avatar');
-                if (avatarElement) avatarElement.textContent = displayName.charAt(0).toUpperCase();
-            }
-
-            try {
-                
-                const response = await fetch('http://localhost:8080/api/profile', {
-                    headers: { 'Authorization': 'Bearer ' + token }
-                });
-                
-                if (response.ok) {
-                    const userData = await response.json();
-                    
-                    if (userData && userData.name) {
-                        updateUI(userData.name);
-                    } else {
-                        
-                        updateUI(savedEmail.split('@')[0]);
-                    }
-                } else {
-                    updateUI(savedEmail.split('@')[0]);
-                }
-            } catch (error) {
-                console.error("Помилка підключення:", error);
-                updateUI(savedEmail.split('@')[0]);
-            }
-        });
-    </script>
 
 </body>
 </html>

@@ -14,32 +14,53 @@
             <div class="logo"><span>≡</span> GO STUDY</div>
             <nav class="sidebar-nav">
                 <a href="profile.html">📊 Дашборд</a>
-                <a href="#">📚 Мої курси</a>
-                <a href="#">⚙️ Налаштування</a>
+                <a href="profile.html">📚 Мої курси</a>
+                <a href="profile.html">⚙️ Налаштування</a>
                 <a href="admin.html" class="active" style="color: #eef0f4;">👑 Адмін-панель</a>
             </nav>
-            <button onclick="window.location.href='index.html'" style="margin-top: auto; background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 10px; border-radius: 8px; cursor: pointer;">🚪 Вийти</button>
+            <button type="button" data-logout style="margin-top: auto; background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 10px; border-radius: 8px; cursor: pointer;">🚪 Вийти</button>
         </aside>
 
         <main class="main-content" style="display: flex; flex-direction: column; align-items: center; padding-top: 50px;">
-            
             <div class="content-header" style="text-align: center; border-bottom: none; margin-bottom: 30px; width: 100%;">
                 <h1 style="font-size: 32px; margin-bottom: 10px;">Панель адміністратора 🛠️</h1>
-                <p style="color: #94a3b8; margin: 0; font-size: 16px;">Додавання нових курсів до бази даних</p>
+                <p id="adminStatus" style="color: #94a3b8; margin: 0; font-size: 16px;">Створіть курс, потім додавайте модулі та уроки</p>
             </div>
 
-            <div class="features-box" style="margin: 0 auto; max-width: 420px; width: 100%; padding: 30px; box-sizing: border-box;">
-               <form id="addCourseForm" style="width: 100%; display: flex; flex-direction: column;">
-                    <h3 style="color:  #00ADD8; margin-bottom: 25px; font-size: 22px; text-align: center;">Новий курс</h3>
-                    
-                    <input type="text" id="courseTitle" placeholder="Назва курсу (напр. Основи Go)" required style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box;">
-                    
-                    <textarea id="courseDesc" placeholder="Детальний опис курсу..." required rows="4" style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box; background-color: #1e293b; border: 1px solid #334155; color: #F1F5F9; border-radius: 8px; padding: 12px; font-family: inherit; resize: vertical;"></textarea>
+            <div class="features-box" style="margin: 0 auto; max-width: 680px; width: 100%; padding: 30px; box-sizing: border-box;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 25px;">
+                    <div id="stepCourseBadge" style="background: #00ADD8; color: #0f172a; border-radius: 6px; padding: 8px; text-align: center; font-weight: bold;">1. Курс</div>
+                    <div id="stepModuleBadge" style="background: #1e293b; color: #94a3b8; border-radius: 6px; padding: 8px; text-align: center; font-weight: bold;">2. Модулі</div>
+                    <div id="stepLessonBadge" style="background: #1e293b; color: #94a3b8; border-radius: 6px; padding: 8px; text-align: center; font-weight: bold;">3. Уроки</div>
+                </div>
 
+                <form id="addCourseForm" style="width: 100%; display: flex; flex-direction: column;">
+                    <h3 style="color: #00ADD8; margin-bottom: 20px; font-size: 22px; text-align: center;">Новий курс</h3>
+                    <input type="text" id="courseTitle" placeholder="Назва курсу" required style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box;">
+                    <textarea id="courseDesc" placeholder="Детальний опис курсу..." required rows="4" style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box; background-color: #1e293b; border: 1px solid #334155; color: #F1F5F9; border-radius: 8px; padding: 12px; font-family: inherit; resize: vertical;"></textarea>
                     <button type="submit" style="background-color: #00ADD8; color: #0f172a; font-weight: bold; width: 100%; max-width: 100%; margin-top: 10px;">➕ Створити курс</button>
                 </form>
+
+                <form id="addModuleForm" hidden style="width: 100%; display: flex; flex-direction: column;">
+                    <h3 style="color: #00ADD8; margin-bottom: 20px; font-size: 22px; text-align: center;">Додати модуль</h3>
+                    <p id="createdCourseInfo" style="color: #94a3b8; margin-top: 0;"></p>
+                    <input type="text" id="moduleTitle" placeholder="Назва модуля" required style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box;">
+                    <input type="number" id="moduleOrder" placeholder="Порядок модуля" value="1" min="0" style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box;">
+                    <button type="submit" style="background-color: #00ADD8; color: #0f172a; font-weight: bold; width: 100%; max-width: 100%; margin-top: 10px;">➕ Додати модуль</button>
+                </form>
+
+                <form id="addLessonForm" hidden style="width: 100%; display: flex; flex-direction: column; margin-top: 28px;">
+                    <h3 style="color: #00ADD8; margin-bottom: 20px; font-size: 22px; text-align: center;">Додати урок</h3>
+                    <p id="createdModuleInfo" style="color: #94a3b8; margin-top: 0;"></p>
+                    <select id="moduleSelect" required style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box; background-color: #1e293b; border: 1px solid #334155; color: #F1F5F9; border-radius: 8px; padding: 12px; font-family: inherit;"></select>
+                    <input type="text" id="lessonTitle" placeholder="Назва уроку" required style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box;">
+                    <textarea id="lessonContent" placeholder="Текст уроку..." required rows="8" style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box; background-color: #1e293b; border: 1px solid #334155; color: #F1F5F9; border-radius: 8px; padding: 12px; font-family: inherit; resize: vertical;"></textarea>
+                    <input type="number" id="lessonOrder" placeholder="Порядок уроку" value="1" min="0" style="width: 100%; max-width: 100%; margin-bottom: 15px; box-sizing: border-box;">
+                    <button type="submit" style="background-color: #00ADD8; color: #0f172a; font-weight: bold; width: 100%; max-width: 100%; margin-top: 10px;">➕ Додати урок</button>
+                </form>
+
+                <div id="adminResult" hidden style="margin-top: 20px; padding: 15px; border-radius: 8px; background: rgba(16, 185, 129, 0.12); color: #10b981;"></div>
             </div>
-            
         </main>
     </div>
 

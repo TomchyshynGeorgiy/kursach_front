@@ -5,81 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Урок | GO STUDY</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script> 
+    <script src="script.js" defer></script>
 </head>
 <body class="dashboard-body">
 
     <div class="dashboard-container">
-        
         <aside class="sidebar" style="min-width: 280px; padding: 20px;">
-            <a href="course-info.html" style="color: #94a3b8; text-decoration: none; font-size: 14px; display: flex; align-items: center; margin-bottom: 30px;">
+            <a id="backToCourseLink" href="course-info.html" style="color: #94a3b8; text-decoration: none; font-size: 14px; display: flex; align-items: center; margin-bottom: 30px;">
                 <span style="margin-right: 8px;">🔙</span> Назад до курсу
             </a>
-            
-            <h3 style="color: #F1F5F9; font-size: 16px; margin-bottom: 15px;">Модуль 1: Основи мови Go</h3>
-            
-            <nav style="display: flex; flex-direction: column; gap: 10px;">
-                <a href="#" style="background: rgba(0, 173, 216, 0.1); color: #00ADD8; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-size: 14px; border-left: 3px solid #00ADD8;">
-                    ▶️ 1. Що таке Go?
-                </a>
-                
-                <a href="#" style="color: #94a3b8; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-size: 14px; transition: 0.3s;">
-                    🔒 2. Змінні та типи даних
-                </a>
+
+            <h3 id="lessonSidebarTitle" style="color: #F1F5F9; font-size: 16px; margin-bottom: 15px;">Уроки курсу</h3>
+            <nav id="lessonNavigation" style="display: flex; flex-direction: column; gap: 10px;">
+                <span style="color: #94a3b8; font-size: 14px;">Завантаження...</span>
             </nav>
         </aside>
 
         <main class="main-content" style="padding: 40px; max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
-            
             <div>
-                <h1 style="font-size: 28px; margin-bottom: 20px;">Що таке Go і чому він такий крутий?</h1>
-                
+                <h1 id="lessonTitle" style="font-size: 28px; margin-bottom: 20px;">Завантаження уроку...</h1>
+
                 <div style="width: 100%; aspect-ratio: 16/9; background-color: #0f172a; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; border: 1px solid #334155; position: relative; overflow: hidden;">
-                    <div style="width: 60px; height: 60px; background-color: #00ADD8; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 20px rgba(0, 173, 216, 0.4);">
+                    <div style="width: 60px; height: 60px; background-color: #00ADD8; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0, 173, 216, 0.4);">
                         <div style="width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 16px solid #fff; margin-left: 5px;"></div>
                     </div>
                     <span style="position: absolute; bottom: 15px; right: 15px; color: #94a3b8; font-size: 12px; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px;">Відео з'явиться тут</span>
                 </div>
 
                 <div class="features-box" style="margin-bottom: 30px; padding: 25px; line-height: 1.6;">
-                    <p style="color: #94a3b8; font-size: 16px; margin-bottom: 15px;">
-                        Go (або Golang) — це компільована багатониткова мова програмування, розроблена всередині компанії Google. 
-                        Вона створювалася як сучасна альтернатива C та C++, але з простішим синтаксисом та вбудованим збирачем сміття.
-                    </p>
-                    <h3 style="color: #F1F5F9; margin-bottom: 10px; margin-top: 20px;">Головні переваги:</h3>
-                    <ul style="color: #94a3b8; padding-left: 20px;">
-                        <li>Неймовірна швидкість виконання програм.</li>
-                        <li>Проста та ефективна підтримка паралельного програмування (горутини).</li>
-                        <li>Строга типізація, що рятує від багатьох помилок.</li>
-                    </ul>
+                    <p id="lessonContent" style="color: #94a3b8; font-size: 16px; margin-bottom: 15px;"></p>
                 </div>
             </div>
 
             <div style="display: flex; flex-direction: column; height: 100%;">
                 <h2 style="font-size: 24px; margin-bottom: 15px; color: #F1F5F9;">Практичне завдання 💻</h2>
-                <p style="color: #94a3b8; font-size: 15px; margin-bottom: 20px;">Спробуй вивести фразу "Hello, World!" за допомогою функції Println. Напиши код нижче і натисни Run.</p>
-                
+                <p style="color: #94a3b8; font-size: 15px; margin-bottom: 20px;">Виконайте практику в редакторі та натисніть кнопку завершення, щоб зберегти прогрес.</p>
+
                 <div style="width: 100%; flex-grow: 1; border-radius: 12px; overflow: hidden; margin-bottom: 20px; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); background-color: #0f172a; min-height: 500px;">
-                    <iframe 
-                        src="https://onecompiler.com/embed/go?theme=dark" 
-                        width="100%" 
-                        height="100%" 
-                        frameborder="0" 
-                        marginwidth="0" 
-                        marginheight="0" 
+                    <iframe
+                        src="https://onecompiler.com/embed/go?theme=dark"
+                        width="100%"
+                        height="100%"
+                        frameborder="0"
+                        marginwidth="0"
+                        marginheight="0"
                         allowfullscreen>
                     </iframe>
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; border-top: 1px solid #1e293b; padding-top: 20px;">
-                    <button style="background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Попередній урок</button>
-                    
-                    <button id="completeLessonBtn" style="background-color: #10b981; color: #fff; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">
-                        ✅ Завершити і перейти далі
-                    </button>
+                    <button id="previousLessonBtn" type="button" style="background: transparent; border: 1px solid #334155; color: #94a3b8; padding: 10px 20px; border-radius: 8px; cursor: pointer;">Попередній урок</button>
+                    <button id="completeLessonBtn" type="button" style="background-color: #10b981; color: #fff; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);">✅ Завершити і перейти далі</button>
                 </div>
             </div>
-
         </main>
     </div>
 
